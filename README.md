@@ -1,5 +1,5 @@
+https://github.com/Shimadakunn/pbw/assets/89693356/9af0fef7-0aee-430a-a623-b2f08a0f866c
 
-https://github.com/Shimadakunn/pbw/assets/89693356/97b965e5-47f6-40f4-a062-8fc2828b6ed7
 # Kuma
 [Kuma App](https://kuma-paw.vercel.app/)
 
@@ -18,3 +18,7 @@ This allows us to abstract fees and unify the currency for gas and link them bet
 
 ## What coming next?
 Link all the gas tank with wormhole in order to be launched and have a smooth user experience that every body dreamed about
+
+
+
+
