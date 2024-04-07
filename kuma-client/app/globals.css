@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+  :root {
+    --background: 0 0% 0%;
+    --foreground: 0 5% 92%;
+ 
+    --card: 0 0% 0%;
+    --card-foreground: 0 5% 92%;
+ 
+    --popover: 0 0% 0%;
+    --popover-foreground: 0 5% 92%;
+ 
+    --primary: 263 99% 71%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+ 
+    --secondary: 69 100% 48%;
+    --secondary-foreground: 0 5% 92%;
+ 
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+ 
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 0 5% 92%;
+ 
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 5% 92%;
+ 
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+ 
+    --radius: 0.5rem;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-bold ;
+    font-family: 'Space', sans-serif;
+  }
+}
+
+@font-face {
+  font-family: Monument;
+  src: url(~/public/fonts/Monument/Monument-Bold.otf) format("woff");
+}
+
+@font-face {
+  font-family: SFPro;
+  src: url(~/public/fonts/sfpro.OTF) format("woff");
+}
+
+@font-face {
+  font-family: Space;
+  src: url(~/public/fonts/space.ttf) format("woff");
+}
+
+@keyframes dot {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.dot {
+  margin-left: 4px;
+}
+
+.animate-dot {
+  animation: dot 2s infinite;
+}
+
+.delay-1 {
+  animation-delay: 0.25s;
+}
+
+.delay-2 {
+  animation-delay: 0.5s;
+}
+
+.dashboard {
+  border-radius: 0.25rem;
+  box-shadow: 3px 5px 0 0 rgba(128, 128, 128, 1),
+              3.8px 5.8px 0 0 #fff;
+}
+.shadow {
+  box-shadow: 0rem 0rem 20rem #6e00f546;
+}
+
+.isUp{
+  filter: hue-rotate(85deg) saturate(80%) brightness(0.85)
+}
+
+.isDown{
+  filter: hue-rotate(300deg) saturate(210%) brightness(0.7) contrast(170%)
+}
