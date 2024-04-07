@@ -18,9 +18,59 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer, useState,useCallback, use } from "react";
+
+import {PublicKey,clusterApiUrl,Cluster,Connection} from "@solana/web3.js";
+import {
+    createAssociatedTokenAccount,
+    sendTransactionWithTokenFee,
+    buildTransactionToTransfer,
+    buildTransactionToCreateAccount
+} from "../../lib/octane/octane";
+import useOctaneConfigStore from "../../lib/octane/useOctaneConfigStore";
+import useTransferFormStore, { ATAState } from "../../lib/octane/useTransferFormStore";
 
 export default function Home() {
+  const { addresses, signTransaction } = useWeb3Auth();
+    const publicKey = addresses[1];
+    const cluster: Cluster = "devnet";
+    const connection = new Connection(clusterApiUrl(cluster));
+
+    const octaneConfig = useOctaneConfigStore((s) => s.config);
+    const feePayer = useOctaneConfigStore((s) => s.config ? new PublicKey(s.config.feePayer) : null);
+    const { fetchOctaneConfig, getTransferFeeConfig, getATAFeeConfig } = useOctaneConfigStore();
+    useEffect(() => {fetchOctaneConfig();}, [fetchOctaneConfig]);
+  
+    const mint = useTransferFormStore((s) => s.mint);
+    const address = useTransferFormStore((s) => s.address);
+    const amount = useTransferFormStore((s) => s.amount);
+    const accountState = useTransferFormStore((s) => s.accountState);
+    const { setMint, setAddress, setAmount, updateAccountState } = useTransferFormStore();
+
+    const transfer = useCallback(async () => {
+        const mintAsPublicKey = "HbAo3NPbDbDoZ1BwMNaVx1mtziDpKsPEpyohEZkCd3Yd";
+        const addressAsPublicKey = "2y17As4NmPaVx2QnNviJx1PSXeLbv4aRzCgWxsi8GHL8";
+
+        const transferFeeConfig = {
+            mint: "HbAo3NPbDbDoZ1BwMNaVx1mtziDpKsPEpyohEZkCd3Yd",
+            account: "41LHqhvqbWoariobSgkHgc959WLNg3eGZtz3btV2yM1B",
+            decimals: 9,
+            fee: 10000000
+        }
+        const transferTransaction = await buildTransactionToTransfer(
+          connection,
+          feePayer,
+          transferFeeConfig,
+          mintAsPublicKey,
+          publicKey,
+          addressAsPublicKey,
+          Math.floor(parseFloat("10") * (10 ** 9))
+        );
+        const signedTransferTransaction = await signTransaction!(transferTransaction);
+        console.log("signedTransferTransaction", signedTransferTransaction)
+        const transferTxId = await sendTransactionWithTokenFee(signedTransferTransaction);
+      }, [mint, address, accountState, feePayer, publicKey, amount, getTransferFeeConfig, getATAFeeConfig]);
+
   return (
     <main className="flex items-center justify-center h-full w-full">
       <div className="shadow w-[75vw] p-2 rounded-xl border border-primary/20 space-y-2 tracking-tight">
@@ -39,6 +89,9 @@ export default function Home() {
             <StakePool key={tok} tok={tok} cont={key} apy={10} tvl={1} />
           ))
         )}
+        <div onClick={()=>transfer()}>
+          <StakePool key={"solana-devnet"} tok={"solana-devnet"} cont={"aave-mumbai-pool"} apy={13.2} tvl={1}/>
+        </div>
       </div>
     </main>
   );

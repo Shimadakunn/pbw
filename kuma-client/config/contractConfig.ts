@@ -23,7 +23,7 @@ export const contract: {
       chainId: "0x13881",
       network: "Polygon Mumbai Testnet",
       address: "0xcC6114B983E4Ed2737E9BD3961c9924e6216c704",
-      tokenArray: ["dai-mumbai","solana-devnet","starknet-goerli","tezos-ghostnet"]
+      tokenArray: ["dai-mumbai","starknet-goerli","tezos-ghostnet"]
     },
     // "aave-sepolia": {
     //   name: "Aave Sepolia",

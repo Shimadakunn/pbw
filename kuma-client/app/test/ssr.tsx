@@ -14,7 +14,7 @@ import { useWeb3Auth } from "@/services/Web3AuthProviderWithWindow";
 import { Button } from "@/components/ui/button";
 
 const Page = () => {
-    const { getConnection, addresses, signTransaction } = useWeb3Auth();
+    const { addresses, signTransaction } = useWeb3Auth();
     const publicKey = addresses[1];
     const cluster: Cluster = "devnet";
     const connection = new Connection(clusterApiUrl(cluster));
